@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
+
 from .forms import ContactForm 
 
  
@@ -11,20 +12,14 @@ def contact_view(request):
 
         if form.is_valid(): 
 
-            name = form.cleaned_data['name'] 
+            form.save()  # Saves directly to the database 
 
-            email = form.cleaned_data['email'] 
-
-            message = form.cleaned_data['message'] 
-
-            # You can process the form data (e.g., save to DB, send an email) 
-
-            return render(request, 'success.html', {'name': name}) 
+            return redirect('success_page') 
 
     else: 
 
         form = ContactForm() 
 
- 
+     
 
     return render(request, 'contact.html', {'form': form}) 
