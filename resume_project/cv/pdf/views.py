@@ -29,7 +29,7 @@ def accept(request):
 def resume(request, id):
     user_profile= Profile.objects.get(pk=id)
     template = loader.get_template('pdf/resume.html')
-    html = template.render({'user_profile': user_profile})
+    html = template.render({'pdf/user_profile': user_profile})
     options = {'page-size': 'Letter',
                'encoding': 'UTF-8',
                }
@@ -62,7 +62,7 @@ def contact_view(request):
         form = ContactForm(request.POST) 
         if form.is_valid(): 
             form.save()  # Saves directly to the database 
-            return redirect('success_page') 
+            return redirect('pdf/success_page') 
     else: 
         form = ContactForm() 
-    return render(request, 'contact.html', {'form': form}) 
+    return render(request, 'pdf/contact.html', {'form': form}) 
