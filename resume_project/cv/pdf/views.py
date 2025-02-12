@@ -64,13 +64,14 @@ def contact_view(request):
         form = ContactForm(request.POST) 
         if form.is_valid(): 
             form.save()  # Saves directly to the database 
-            return redirect('success_page') 
+            return render(request, 'pdf/success.html')
     else: 
         form = ContactForm() 
     return render(request, 'pdf/contact.html', {'form': form}) 
 
 
 def create_cv(request): 
+    cv_list = CV.objects.all()
     if request.method == "POST": 
         form = CVForm(request.POST, request.FILES)  # Handle file uploads 
         if form.is_valid(): 
