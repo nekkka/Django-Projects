@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from pdf import views
+from django.conf.urls.static import static 
+from django.conf import settings
+
 
 
 urlpatterns = [
@@ -9,4 +12,4 @@ urlpatterns = [
     path('<int:id>/', views.resume, name="resume"),
     path('list/', views.list, name="list"),
     path('contact/', views.contact_view, name='contact'), 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.template import loader
 import io
 from .forms import ContactForm 
+from .forms import CVForm 
+from .models import CV 
 
 def accept(request):
     if request.method == "POST":
@@ -29,7 +31,7 @@ def accept(request):
 def resume(request, id):
     user_profile= Profile.objects.get(pk=id)
     template = loader.get_template('pdf/resume.html')
-    html = template.render({'pdf/user_profile': user_profile})
+    html = template.render({'user_profile': user_profile})
     options = {'page-size': 'Letter',
                'encoding': 'UTF-8',
                }
@@ -62,7 +64,19 @@ def contact_view(request):
         form = ContactForm(request.POST) 
         if form.is_valid(): 
             form.save()  # Saves directly to the database 
-            return redirect('pdf/success_page') 
+            return redirect('success_page') 
     else: 
         form = ContactForm() 
     return render(request, 'pdf/contact.html', {'form': form}) 
+
+
+def create_cv(request): 
+    if request.method == "POST": 
+        form = CVForm(request.POST, request.FILES)  # Handle file uploads 
+        if form.is_valid(): 
+            form.save() 
+            #return redirect('cv_list')  # Redirect to CV listing page 
+            return render(request, 'pdf/cv_list.html', {'cv_list': cv_list})
+    else: 
+        form = CVForm() 
+    return render(request, 'pdf/cv_form.html', {'form': form}) 
