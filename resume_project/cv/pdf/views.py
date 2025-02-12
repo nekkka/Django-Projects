@@ -80,15 +80,15 @@ def create_cv(request):
         form = CVForm(request.POST, request.FILES)  # Handle file uploads 
         if form.is_valid(): 
             form.save() 
-            #return redirect('cv_list')  # Redirect to CV listing page 
-            return render(request, 'pdf/cv_list.html', {'cv_list': cv_list})
+            return redirect('cv_list') 
+            #return render(request, 'pdf/cv_list.html', {'cv_list': cv_list})
     else: 
         form = CVForm() 
     return render(request, 'pdf/cv_form.html', {'form': form}) 
 
 def cv_list(request):
     cvs = CV.objects.all()
-    print("CVs in database:", cvs)  # Проверяем, есть ли данные
+    print("CVs in database:", cvs)  # Проверochka
     return render(request, 'pdf/cv_list.html', {'cvs': cvs})
 
 
