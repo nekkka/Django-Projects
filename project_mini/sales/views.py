@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import SalesOrder, Invoice
 from .serializers import SalesOrderSerializer, InvoiceSerializer
+from .utils import generate_invoice_pdf
+from django.shortcuts import get_object_or_404
+
 
 class SalesOrderViewSet(viewsets.ModelViewSet):
     queryset = SalesOrder.objects.all()

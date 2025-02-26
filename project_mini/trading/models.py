@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import Sum, F
 
 class Order(models.Model):
     BUY = 'BUY'
@@ -29,3 +30,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user} | {self.order_type} | {self.quantity} @ {self.price}"
+
+    @staticmethod
+    def total_trading_volume():
+        return Order.objects.aggregate(volume=Sum('quantity'))['volume'] or 0
+
+    @staticmethod
+    def total_revenue():
+        return Order.objects.aggregate(revenue=Sum(F('quantity') * F('price')))['revenue'] or 0
