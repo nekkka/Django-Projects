@@ -1,11 +1,9 @@
-<h2>Add a New Food Item</h2> 
+<h2>Add Food to Your List</h2>
 
-<form method="POST"> 
+<form method="POST">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
 
-    {% csrf_token %} 
-
-    {{ form.as_p }} 
-
-    <button type="submit">Add Food</button> 
-
-</form> 
+    <button type="submit" class="btn btn-success">Add Item</button>
+</form>
