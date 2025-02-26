@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'products',
     'trading',
     'sales',
+    'analytics',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +156,9 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0' 
