@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "project_mini.wsgi:application"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DEBUG=False
+      - DJANGO_ALLOWED_HOSTS=*
+
+  celery:
+    build: .
+    command: celery -A project_mini worker --loglevel=info
+    depends_on:
+      - redis
+      - web
+
+  celery-beat:
+    build: .
+    command: celery -A project_mini beat --loglevel=info
+    depends_on:
+      - redis
+      - web
+
+volumes:
+  postgres_data:
