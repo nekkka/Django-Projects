@@ -10,6 +10,9 @@ Docker
    ```bash
    docker run -d -p 8000:8000 --name project_mini nekkka67/project_mini
 
+The video is quite long, so it's impossible to upload it here. Please tap the link to check the video: https://drive.google.com/file/d/1oPNBo3SgYGnxsUb4fvzRBinQI9LSm8rm/view?usp=share_link
+
+
 
 Some screenshots (когда не забывавла их делать):
 ![image](https://github.com/user-attachments/assets/b86be43b-1ed3-460f-acf1-c04518f04663)
