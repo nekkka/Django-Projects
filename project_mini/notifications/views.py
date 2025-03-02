@@ -7,14 +7,15 @@ class NotificationListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Notification.objects.filter(user=self.request.user)
+       # user = self.request.user
+       # print(f"Запрос уведомлений для пользователя: {user}")  # Debug print
+       # return Notification.objects.filter(user=user)
+       return Notification.objects.all()
 
-class MarkAsReadView(generics.UpdateAPIView):
+class MarkAsReadView(generics.RetrieveUpdateAPIView):
+    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Notification.objects.filter(user=self.request.user, is_read=False)
 
     def perform_update(self, serializer):
         serializer.save(is_read=True)

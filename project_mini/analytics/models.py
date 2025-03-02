@@ -13,6 +13,7 @@ class AnalyticsReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='reports/')
     generated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    task_id= models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.get_report_type_display()} ({self.created_at})"

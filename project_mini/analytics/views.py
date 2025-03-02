@@ -22,8 +22,10 @@ class GenerateProfitLossReportView(APIView):
 class DownloadReportView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, report_id):
-        report = AnalyticsReport.objects.filter(id=report_id, generated_by=request.user).first()
+    def get(self, request, task_id):
+        report = AnalyticsReport.objects.filter(task_id=task_id, generated_by=request.user).first()
         if not report:
             return Response({"error": "Report not found"}, status=404)
+
         return FileResponse(open(report.file.path, 'rb'), as_attachment=True)
+
